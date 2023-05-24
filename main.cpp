@@ -14,6 +14,14 @@ void out_vec(vector<int> vec_1)
     cout << endl;
 }
 
+/*Funkce pro kontrolu jestli vstupní string je opravdu číslo*/
+bool is_number(const string& s)
+{
+    string::const_iterator it = s.begin();
+    while(it != s.end() && isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
+}
+
 /*Funkce pro převedení obou vektorů na stejnou délku aby se s nima dalo pěkně pracovat*/
 vector<int> simv(vector<int> vec_1, vector<int> vec_2)
 {
@@ -95,21 +103,34 @@ void subv(vector<int> vec_1, vector<int> vec_2)
 
 int main()
 {
-    vector<int> vec_1, vec_2;
+    string in_1, in_2;
 
- /*Připravení dvou vektorů pro testování*/
-    vec_1.push_back(6);
-    vec_1.push_back(1);
-    vec_1.push_back(9);
-    vec_1.push_back(3);
-    vec_1.push_back(8);
-    vec_1.push_back(5);
+    cout << "Zadejte prvni cislo: ";
+    cin >> in_1;
 
-    vec_2.push_back(5);
-    vec_2.push_back(5);
-    vec_2.push_back(5);
-    vec_2.push_back(3);
- /****************************************/
+    cout << "Zadejte druhe cislo: ";
+    cin >> in_2;
+
+    if(is_number(in_1) == false || (is_number(in_2) == false))
+    {
+        cout << "CHYBA VE VSTUPU: Zadany vstup neni cislo." << endl;
+        return 1;
+    }
+
+    vector<char> vec__1(in_1.begin(), in_1.end());
+    vector<char> vec__2(in_2.begin(), in_2.end());
+
+    vector<int> vec_1(vec__1.begin(), vec__1.end());
+    vector<int> vec_2(vec__2.begin(), vec__2.end());
+
+    for(auto& i: vec_1) i -= '0';
+    for(auto& i: vec_2) i -= '0';
+
+    /*Pokus o vymazání vektorů z paměťi*/
+    vec__1.clear();
+    vec__2.clear();
+    vec__1.shrink_to_fit();
+    vec__2.shrink_to_fit();
 
     out_vec(vec_1);
     out_vec(vec_2); //Vypíšu oba vektory
