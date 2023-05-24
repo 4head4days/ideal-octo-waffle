@@ -15,7 +15,7 @@ void out_vec(vector<int> vec_1)
 }
 
 /*Funkce pro převedení obou vektorů na stejnou délku aby se s nima dalo pěkně pracovat*/
-void simv(vector<int> vec_1, vector<int> vec_2)
+vector<int> simv(vector<int> vec_1, vector<int> vec_2)
 {
     int s1, s2;
     s1 = vec_1.size();
@@ -28,7 +28,9 @@ void simv(vector<int> vec_1, vector<int> vec_2)
             it = vec_2.begin(); // nevím jestli je tohle nejlepší řešení ale funguje
             vec_2.insert(it, 0);
         }
-    }else if(s2 > s1)
+        return vec_2;
+    }
+    else if(s2 > s1)
     {
         vector<int>::iterator it;
         for(int i = s1; i < s2; i++)
@@ -36,8 +38,8 @@ void simv(vector<int> vec_1, vector<int> vec_2)
             it = vec_1.begin();
             vec_1.insert(it, 0);
         }
+        return vec_1;
     }
-
 }
 
 /*Funkce pro sčítání "pod sebou"*/
@@ -112,7 +114,11 @@ int main()
     out_vec(vec_1);
     out_vec(vec_2); //Vypíšu oba vektory
 
-    simv(vec_1, vec_2); //Převedu je na stejnou délku
+    if(vec_2.size() < vec_1.size())
+    {
+        vec_2 = simv(vec_1, vec_2);
+    }
+    else if(vec_1.size() < vec_2.size()) vec_1 = simv(vec_1, vec_2);
 
     cout << "------\n";
     addv(vec_1, vec_2); //Sečtu je
