@@ -51,7 +51,7 @@ vector<int> simv(vector<int> vec_1, vector<int> vec_2)
 }
 
 /*Funkce pro sčítání "pod sebou"*/
-void addv(vector<int> vec_1, vector<int> vec_2)
+vector<int> addv(vector<int> vec_1, vector<int> vec_2)
 {
     int ast1 = 0, ast2 = 0, ast3 = 0, carry = 0;
     int n = vec_1.size();
@@ -69,13 +69,11 @@ void addv(vector<int> vec_1, vector<int> vec_2)
         res.push_back(ast3);
     }
     if(carry>0) res.push_back(carry);
-    int q = res.size();
-    for(int i = q; i > 0; i--) cout << res[i-1];
-    cout << endl;
+    return res;
 }
 
 /*Funkce pro odčítání "pod sebou"*/
-void subv(vector<int> vec_1, vector<int> vec_2)
+vector<int> subv(vector<int> vec_1, vector<int> vec_2)
 {
     int ast1 = 0, ast2 = 0, ast3 = 0, carry = 0;
     int n = vec_1.size();
@@ -96,14 +94,13 @@ void subv(vector<int> vec_1, vector<int> vec_2)
         }
         res.push_back(ast3);
     }
-    int q = res.size();
-    for(int i = q; i > 0; i--) cout << res[i-1];
-    cout << endl;
+    return res;
 }
 
 int main()
 {
     string in_1, in_2;
+    vector<int> addvec, subvec, multvec;
 
     cout << "Zadejte prvni cislo: ";
     cin >> in_1;
@@ -142,10 +139,12 @@ int main()
     else if(vec_1.size() < vec_2.size()) vec_1 = simv(vec_1, vec_2);
 
     cout << "------\n";
-    addv(vec_1, vec_2); //Sečtu je
+    addvec = addv(vec_1, vec_2); //Sečtu je
+    out_vec(addvec);
 
     cout << "------\n";
-    subv(vec_1, vec_2); //Odečtu je
+    subvec = subv(vec_1, vec_2); //Odečtu je
+    out_vec(subvec);
     //POZNÁMKA: Odčítání nefunguje správně když se odečítá větší číslo od menšího
 
     return 0;
